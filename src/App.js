@@ -47,34 +47,61 @@ const App = () => {
     setResult(indexFounded);
   };
 
+  const renderText = () => {
+    if (!result) {
+      return '';
+    } else if (result === -1) {
+      return 'Pattern not found';
+    }
+
+    return 'Pattern founded at index';
+  };
+
   return (
     <div className="App">
-      <h1>KMP Search Algorithm</h1>
-      <form action="">
-        <div>
-          <label>String to search in</label>
-          <input
-            type="text"
-            id="search-in"
-            value={strSearchIn}
-            onChange={(e) => setStrSearchIn(e.target.value)}
-          />
+      <header>
+        <div className="icon-place"></div>
+        <h1 className="title">KMP Search Algorithm</h1>
+      </header>
+      <div className="container">
+        <div className="kmp-container">
+          <form action="" className="form">
+            <div className="input-box search-in-content">
+              <label>String to search in</label>
+              <input
+                type="text"
+                id="search-in"
+                value={strSearchIn}
+                onChange={(e) => setStrSearchIn(e.target.value)}
+              />
+            </div>
+            <div className="input-box search-for-content">
+              <label>String to search for</label>
+              <input
+                type="text"
+                id="search-for"
+                value={strSearchFor}
+                onChange={(e) => setStrSearchFor(e.target.value)}
+              />
+            </div>
+            <div className="button-container">
+              <button type="button" onClick={searchFor}>Search</button>
+            </div>
+          </form>
+          <div className="result-container">
+            <p>{renderText()}</p>
+            <p className={`${!result || result === -1 ? '' : 'result'}`}>
+              {
+                !result || result === -1
+                  ? ''
+                  : result
+              }
+            </p>
+          </div>
         </div>
-        <div>
-          <label>String to search for</label>
-          <input
-            type="text"
-            id="search-for"
-            value={strSearchFor}
-            onChange={(e) => setStrSearchFor(e.target.value)}
-          />
+        <div className="history">
+
         </div>
-        <div>
-          <button type="button" onClick={searchFor}>Search</button>
-        </div>
-      </form>
-      <div className="result">
-        <p>Find string at: <span>{result}</span></p>
       </div>
     </div>
   );
