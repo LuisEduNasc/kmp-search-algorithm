@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 const App = () => {
-  const [result, setResult] = useState();
+  const [result, setResult] = useState(null);
   const [strSearchIn, setStrSearchIn] = useState('');
   const [strSearchFor, setStrSearchFor] = useState('');
 
@@ -27,6 +27,8 @@ const App = () => {
   };
 
   const searchFor = () => {
+    setResult(null);
+    
     if (strSearchFor === "") return 0;
     const lpsTable = getLps(strSearchFor);
     let i = 0;
@@ -47,7 +49,7 @@ const App = () => {
     setResult(indexFounded);
   };
 
-  const renderText = () => {
+  const renderText = useCallback(() => {
     if (!result) {
       return '';
     } else if (result === -1) {
@@ -55,7 +57,7 @@ const App = () => {
     }
 
     return 'Pattern founded at index';
-  };
+  },[result]);
 
   return (
     <div className="App">
@@ -88,7 +90,7 @@ const App = () => {
               <button type="button" onClick={searchFor}>Search</button>
             </div>
           </form>
-          <div className="result-container">
+          <div className={`${!result ? '' : 'result-container'}`}>
             <p>{renderText()}</p>
             <p className={`${!result || result === -1 ? '' : 'result'}`}>
               {
